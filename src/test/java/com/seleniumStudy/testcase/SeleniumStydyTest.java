@@ -38,6 +38,11 @@ public class SeleniumStydyTest {
 
     }
 
+    @Test
+    public void xpathLocation(){
+        driver.get("https://www.baidu.com");
+    }
+
     @AfterAll
     public static void tearDown(){
         driver.quit();
