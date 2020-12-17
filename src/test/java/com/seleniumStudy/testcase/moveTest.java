@@ -10,26 +10,21 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.util.concurrent.TimeUnit;
 
-public class ActionSeleniumTest {
+public class moveTest {
     public static WebDriver driver;
 //    public static Actions actions;
     @BeforeAll
     public static void initData(){
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
     }
 
     @Test
-    public void actionTest() throws InterruptedException {
-        driver.get("http://sahitest.com/demo/clicks.htm");
-        Actions actions = new Actions(driver);
-        Thread.sleep(3000);
-        actions.doubleClick(driver.findElement(By.xpath("//input[@value='dbl click me']")));
-        actions.click(driver.findElement(By.xpath("//input[@value='right click me']")));
-        actions.contextClick(driver.findElement(By.xpath("//input[@value='right click me']")));
-        actions.perform();
-
+    public void moveTest(){
+        driver.get("https://baidu.com");
+        Actions action = new Actions(driver);
+        action.moveToElement(driver.findElement(By.id("s-usersetting-top")));
+        action.perform();
     }
 
     @AfterAll
