@@ -27,6 +27,15 @@ public class moveTest {
         action.perform();
     }
 
+    @Test
+    public void dragTest(){
+        driver.get("http://sahitest.com/demo/dragDropMooTools.htm");
+        Actions action = new Actions(driver);
+        action.dragAndDrop(driver.findElement(By.id("dragger")),driver.findElement(By.xpath("//*[@class='item'][last()]")));
+        action.perform();
+
+    }
+
     @AfterAll
     public static void tearDown(){
         driver.quit();
