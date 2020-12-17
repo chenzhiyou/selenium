@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -29,13 +30,34 @@ public class moveTest {
 
     @Test
     public void dragTest(){
+//        拖动键盘测试
         driver.get("http://sahitest.com/demo/dragDropMooTools.htm");
         Actions action = new Actions(driver);
-        action.dragAndDrop(driver.findElement(By.id("dragger")),driver.findElement(By.xpath("//*[@class='item'][last()]")));
-        action.perform();
+        try {
+            action.dragAndDrop(driver.findElement(By.id("dragger")),driver.findElement(By.xpath("//*[@class='item'][last()]")));
+            action.perform();
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
+    @Test
+    public void keyBoardTest(){
+//        键盘操作测试
+        driver.get("http://sahitest.com/demo/label.htm");
+        Actions action = new Actions(driver);
+        driver.findElements(By.xpath("//input[@type='textbox']")).get(0).sendKeys("ceshi");
+        action.keyDown(Keys.COMMAND).sendKeys("a").keyUp(Keys.COMMAND).perform();
+        action.keyDown(Keys.COMMAND).sendKeys("c").keyUp(Keys.COMMAND).perform();
+        action.keyDown(driver.findElements(By.xpath("//input[@type='textbox']")).get(1),Keys.COMMAND).sendKeys("v").keyUp(Keys.COMMAND).perform();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     @AfterAll
     public static void tearDown(){
         driver.quit();
