@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -58,6 +59,26 @@ public class moveTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void scrollTest(){
+        driver.get("https://www.baidu.com");
+        driver.findElement(By.id("kw")).sendKeys("霍格沃兹测试学员");
+        driver.findElement(By.id("su")).click();
+
+
+        try {
+            JavascriptExecutor jsDriver = (JavascriptExecutor)driver;
+            jsDriver.executeScript("window.scrollBy(0, document.body.scrollHeight)");
+            Thread.sleep(4000);
+            driver.findElement(By.xpath("//a[@class='n']"));
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @AfterAll
     public static void tearDown(){
         driver.quit();
