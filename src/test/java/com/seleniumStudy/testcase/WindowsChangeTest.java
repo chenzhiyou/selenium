@@ -19,16 +19,18 @@ public class WindowsChangeTest {
     }
 
     @Test
-    public void windowChangeTest(){
+    public void windowChangeTest() throws InterruptedException {
         driver.get("https://baidu.com");
         driver.findElements(By.xpath("//a[@name='tj_login']")).get(1).click();
 //        获取当前的handle
         String winhadle = driver.getWindowHandle();
         driver.findElement(By.xpath("//a[@class='pass-reglink pass-link']")).click();
+        Thread.sleep(3000);
         for (String win:driver.getWindowHandles()){
             if(!win.equals(winhadle)){
 //                窗口切换
                 driver.switchTo().window(win);
+                Thread.sleep(3000);
             }
         }
 
