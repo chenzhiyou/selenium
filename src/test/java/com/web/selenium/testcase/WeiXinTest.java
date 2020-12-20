@@ -25,22 +25,24 @@ public class WeiXinTest {
     @BeforeAll
     public static void initData() throws InterruptedException, IOException {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         File file = new File("cookies.yaml");
-        if(file.exists()){
-            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        if(file.exists()) {
             // 使用yaml文件中的cookies信息进行登录，登录作为前置条件，移动到beforeall中进行操作
             driver.get("https://work.weixin.qq.com/wework_admin/frame");
             Thread.sleep(4000);
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-            TypeReference<List<HashMap<String, Object>>> typeReference = new TypeReference<List<HashMap<String, Object>>>(){};
+            TypeReference<List<HashMap<String, Object>>> typeReference = new TypeReference<List<HashMap<String, Object>>>() {
+            };
             List<HashMap<String, Object>> cookies = mapper.readValue(file, typeReference);
             System.out.println(cookies);
-            cookies.forEach(cookieMap->{
-                driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(),cookieMap.get("value").toString()));
+            cookies.forEach(cookieMap -> {
+                driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(), cookieMap.get("value").toString()));
             });
 //      刷新界面
             driver.navigate().refresh();
             Thread.sleep(4000);
+//        }
         }else{
             neddLogin();
         }
@@ -56,6 +58,7 @@ public class WeiXinTest {
             Set<Cookie> cookies  = driver.manage().getCookies();
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
             mapper.writeValue(new File("cookies.yaml"), cookies);
+            System.exit(0);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -66,14 +69,38 @@ public class WeiXinTest {
     @Test
     public void AddMemberTest() throws IOException, InterruptedException {
         //添加新的成员
-        driver.findElement(By.xpath("//span[@class='ww_indexImg ww_indexImg_AddMember']")).click();
-        driver.findElement(By.id("username")).sendKeys("小江山");
+//        driver.findElement(By.xpath("//span[@class='ww_indexImg ww_indexImg_AddMember']")).click();
+        driver.findElement(By.cssSelector("[node-type='addmember']")).click();
+        driver.findElement(By.name("username")).sendKeys("小江山");
         driver.findElement(By.id("memberAdd_english_name")).sendKeys("小江山");
+        driver.findElement(By.name("mobile")).sendKeys("18332553177");
         Random r = new Random(1);
         int num = r.nextInt(100);
         String acctid = "admin" + num;
         driver.findElement(By.id("memberAdd_acctid")).sendKeys(acctid);
         driver.findElements(By.xpath("//a[@class='qui_btn ww_btn ww_btn_Blue js_btn_continue']")).get(1).click();
+    }
+    @Test
+    public void AddMember2Test() throws IOException, InterruptedException {
+        //添加新的成员
+//        driver.findElement(By.xpath("//span[@class='ww_indexImg ww_indexImg_AddMember']")).click();
+        click(By.cssSelector("[node-type='addmember']"));
+        snedKeys(By.name("username"),"小江山");
+        snedKeys(By.id("memberAdd_english_name"), "小江山");
+        snedKeys(By.name("mobile"),"18332553176");
+        Random r = new Random(1);
+        int num = r.nextInt(100);
+        String acctid = "admin" + num;
+        snedKeys(By.id("memberAdd_acctid"),acctid);
+        driver.findElements(By.xpath("//a[@class='qui_btn ww_btn ww_btn_Blue js_btn_continue']")).get(1).click();
+    }
+//    进行简单的封装
+    public void click(By by){
+        driver.findElement(by).click();
+    }
+
+    public void snedKeys(By by, String content){
+        driver.findElement(by).sendKeys(content);
     }
 
     @AfterAll
