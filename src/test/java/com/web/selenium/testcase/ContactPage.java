@@ -8,6 +8,7 @@ import java.util.Random;
 public class ContactPage extends BasePage {
 
     public ContactPage(WebDriver driver) {
+        //保存driver到自己的实例
         super(driver);
     }
 
@@ -23,12 +24,10 @@ public class ContactPage extends BasePage {
     }
 
     public ContactPage searchDepart(String departName){
+        // PO原则1 用公共方法代表页面所提供的功能
+        //PO原则3 通常不要再PO方法内添加断言
         snedKeys(By.id("memberSearchInput"),departName);
-//        Thread.sleep(2000);
-//        String context = driver.findElement(By.cssSelector(".js_party_info")).getText();
-        //        在进行页面元素获取时，可能没有出现页面的元素，可以添加对一个元素的点击，利用隐式等待，后，再次获取元素
         click(By.cssSelector(".ww_icon ww_icon_AddMember"));
-//        context = driver.findElement(By.cssSelector(".js_party_info")).getText();
         return this;
     }
 

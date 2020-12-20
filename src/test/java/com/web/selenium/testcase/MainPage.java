@@ -62,11 +62,14 @@ public class MainPage extends BasePage{
 
     //driver为实例方法
     public MainPage() throws IOException, InterruptedException {
+        //初始化Selenium，复用session，打开网站
         this.initData();
     }
 
     public ContactPage contact(){
+        //进入通讯录
         click(By.cssSelector("[href='#contacts']"));
+        //传递Selenium的driver给另外一个PO
         return new ContactPage(driver);
     }
 }
