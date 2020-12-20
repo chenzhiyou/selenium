@@ -23,13 +23,32 @@ public class WeiXinTest {
     public static WebDriver driver;
 
     @BeforeAll
-    public static void initData(){
+    public static void initData() throws InterruptedException, IOException {
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        File file = new File("cookies.yaml");
+        if(file.exists()){
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            // 使用yaml文件中的cookies信息进行登录，登录作为前置条件，移动到beforeall中进行操作
+            driver.get("https://work.weixin.qq.com/wework_admin/frame");
+            Thread.sleep(4000);
+            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+            TypeReference<List<HashMap<String, Object>>> typeReference = new TypeReference<List<HashMap<String, Object>>>(){};
+            List<HashMap<String, Object>> cookies = mapper.readValue(file, typeReference);
+            System.out.println(cookies);
+            cookies.forEach(cookieMap->{
+                driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(),cookieMap.get("value").toString()));
+            });
+//      刷新界面
+            driver.navigate().refresh();
+            Thread.sleep(4000);
+        }else{
+            neddLogin();
+        }
+
     }
 
-    @Test
-    public void loginTest() throws IOException {
+//    需要登录的时候执行登录的方法
+    public static void neddLogin() throws IOException {
         driver.get("https://work.weixin.qq.com/wework_admin/frame");
         try {
             Thread.sleep(20000);
@@ -43,21 +62,9 @@ public class WeiXinTest {
         }
 
     }
-    // 使用yaml文件中的cookies信息进行登录
+
     @Test
-    public void loginedTest() throws IOException, InterruptedException {
-        driver.get("https://work.weixin.qq.com/wework_admin/frame");
-        Thread.sleep(4000);
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        TypeReference<List<HashMap<String, Object>>> typeReference = new TypeReference<List<HashMap<String, Object>>>(){};
-        List<HashMap<String, Object>> cookies = mapper.readValue(new File("cookies.yaml"), typeReference);
-        System.out.println(cookies);
-        cookies.forEach(cookieMap->{
-            driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(),cookieMap.get("value").toString()));
-        });
-//      刷新界面
-        driver.navigate().refresh();
-        Thread.sleep(4000);
+    public void AddMemberTest() throws IOException, InterruptedException {
         //添加新的成员
         driver.findElement(By.xpath("//span[@class='ww_indexImg ww_indexImg_AddMember']")).click();
         driver.findElement(By.id("username")).sendKeys("小江山");
