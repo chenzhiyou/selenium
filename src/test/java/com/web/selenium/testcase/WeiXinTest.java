@@ -19,6 +19,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class WeiXinTest {
     public static WebDriver driver;
 
@@ -82,7 +84,7 @@ public class WeiXinTest {
     }
     @Test
     public void AddMember2Test() throws IOException, InterruptedException {
-        //添加新的成员
+        //使用简单封装后的方法进行添加成员的测试
 //        driver.findElement(By.xpath("//span[@class='ww_indexImg ww_indexImg_AddMember']")).click();
         click(By.cssSelector("[node-type='addmember']"));
         snedKeys(By.name("username"),"小江山");
@@ -94,6 +96,24 @@ public class WeiXinTest {
         snedKeys(By.id("memberAdd_acctid"),acctid);
         driver.findElements(By.xpath("//a[@class='qui_btn ww_btn ww_btn_Blue js_btn_continue']")).get(1).click();
     }
+
+    @Test
+    public void departementSearchTest(){
+        click(By.cssSelector("[href='#contacts']"));
+        snedKeys(By.id("memberSearchInput"),"测试");
+        String context = driver.findElement(By.cssSelector(".js_party_info")).getText();
+        assertTrue(context.contains("当前部门无任何成员"));
+    }
+
+    @Test
+//    public void departementAddTest(){
+//        click(By.cssSelector("[href='#contacts']"));
+//        click(By.xpath("//a[@class='member_colLeft_top_addBtnWrap js_create_dropdown']"));
+//        click(By.xpath("//a[@class='js_create_party']"));
+//        snedKeys(By.name("name"),"测试部门");
+//
+//
+//    }
 //    进行简单的封装
     public void click(By by){
         driver.findElement(by).click();
