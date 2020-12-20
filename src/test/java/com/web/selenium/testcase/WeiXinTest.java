@@ -98,10 +98,15 @@ public class WeiXinTest {
     }
 
     @Test
-    public void departementSearchTest(){
+    public void departementSearchTest() throws InterruptedException {
+//        部门搜索测试用例
         click(By.cssSelector("[href='#contacts']"));
         snedKeys(By.id("memberSearchInput"),"测试");
+//        Thread.sleep(2000);
         String context = driver.findElement(By.cssSelector(".js_party_info")).getText();
+        //        在进行页面元素获取时，可能没有出现页面的元素，可以添加对一个元素的点击，利用隐式等待，后，再次获取元素
+        click(By.cssSelector(".ww_icon ww_icon_AddMember"));
+        context = driver.findElement(By.cssSelector(".js_party_info")).getText();
         assertTrue(context.contains("当前部门无任何成员"));
     }
 
