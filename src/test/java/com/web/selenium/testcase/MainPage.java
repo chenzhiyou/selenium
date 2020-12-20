@@ -16,8 +16,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MainPage extends BasePage{
-    //driver是一个实例对象
-    WebDriver driver;
     //初始化方法
     public void initData() throws InterruptedException, IOException {
         driver = new ChromeDriver();
@@ -66,16 +64,9 @@ public class MainPage extends BasePage{
     public MainPage() throws IOException, InterruptedException {
         this.initData();
     }
-    //添加成员
-    public ContactPage addMember(){
-        click(By.cssSelector("[node-type='addmember']"));
-        return new ContactPage(driver);
-    }
-    //搜索部门
-    public ContactPage searchDepartment(){
+
+    public ContactPage contact(){
         click(By.cssSelector("[href='#contacts']"));
         return new ContactPage(driver);
     }
-
-
 }

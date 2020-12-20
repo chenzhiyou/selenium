@@ -14,9 +14,10 @@ public class ContactPOTest {
         MainPage mainPage = new MainPage();
         //跳转界面
         //进行搜索
-        mainPage.addMember().addMember("小江山", "小江山", "18332553176");
-        mainPage.addMember().searchDepart("销售部");
-        String content = mainPage.addMember().getPartyInfo();
+        ContactPage contactPage = mainPage.contact();
+        contactPage.addMember("小江山", "小江山", "18332553176");
+        contactPage.searchDepart("销售部");
+        String content = contactPage.getPartyInfo();
         assertTrue(content.contains("无任何成员"));
        // assert
     }

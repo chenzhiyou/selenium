@@ -6,10 +6,11 @@ import org.openqa.selenium.WebDriver;
 import java.util.Random;
 
 public class ContactPage extends BasePage {
-    private WebDriver driver;
-    public ContactPage(WebDriver driver){
-        this.driver = driver;
+
+    public ContactPage(WebDriver driver) {
+        super(driver);
     }
+
     public ContactPage addMember(String username, String acctid, String mobile){
         snedKeys(By.name("username"),username);
         snedKeys(By.id("memberAdd_english_name"), acctid);
