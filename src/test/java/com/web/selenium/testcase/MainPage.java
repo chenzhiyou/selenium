@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.File;
@@ -24,7 +23,7 @@ public class MainPage extends BasePage{
         if(file.exists()) {
             // 使用yaml文件中的cookies信息进行登录，登录作为前置条件，移动到beforeall中进行操作
             driver.get("https://work.weixin.qq.com/wework_admin/frame");
-            Thread.sleep(4000);
+            Thread.sleep(10000);
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
             TypeReference<List<HashMap<String, Object>>> typeReference = new TypeReference<List<HashMap<String, Object>>>() {
             };
@@ -70,6 +69,7 @@ public class MainPage extends BasePage{
         //进入通讯录
         click(By.cssSelector("[href='#contacts']"));
         //传递Selenium的driver给另外一个PO
+        //PO原则4 跳转或者进入新页面使用返回新的PO来模拟
         return new ContactPage(driver);
     }
 }
