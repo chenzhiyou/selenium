@@ -49,4 +49,13 @@ public class ContactPOTest {
         String content = contactPage.getPartyInfo();
         assertTrue(content.contains(department));
     }
+    // 删除部门信息
+    @Test
+    public void testDeleteDepart() throws InterruptedException {
+        String department = "哈哈1";
+        contactPage.deleteDepart();
+        contactPage.searchDepart(department);
+        String content = contactPage.getPartyInfo();
+        assertTrue(!(content.contains(department)));
+    }
 }

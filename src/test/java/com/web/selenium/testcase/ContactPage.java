@@ -65,6 +65,16 @@ public class ContactPage extends BasePage {
         click(By.linkText("保存"));
         return this;
     }
+// 删除部门信息
+    public ContactPage deleteDepart(){
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(By.xpath("//a[contains(text(),'哈哈1')]")));
+        click(By.xpath("//a[contains(text(),'哈哈1')]"));
+        click(By.xpath("//a[contains(text(),'哈哈1')]/span"));
+        click(By.linkText("删除"));
+        click(By.linkText("确定"));
+        return this;
+    }
 
     //获取搜索部门后的结果信息
     public String getPartyInfo(){
