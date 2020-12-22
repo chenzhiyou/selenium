@@ -1,4 +1,4 @@
-package headFirstJava;
+package headFirstJava.first;
 
 public class firstCapter_03_Shuffe1 {
     public static void main(String[] args){

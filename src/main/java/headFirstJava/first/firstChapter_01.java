@@ -1,4 +1,4 @@
-package headFirstJava;
+package headFirstJava.first;
 
 public class firstChapter_01 {
     public static void main(String[] args){
