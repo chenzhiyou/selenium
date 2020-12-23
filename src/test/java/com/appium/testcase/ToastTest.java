@@ -8,6 +8,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ToastTest {
@@ -30,6 +32,7 @@ public class ToastTest {
         //获取toast控件的内容并打印
         System.out.println(driver.findElement(By.xpath("//*[@classs='android.widget.Toast']")).getText());
     }
+    @Test
     public void assertTest(){
         Integer a = new Integer(1);
         Integer b = new Integer(2);
@@ -41,6 +44,12 @@ public class ToastTest {
         assertNull(b);
         assertSame(a, b);
         assertNotSame(a, b);
-
+    }
+    @Test
+    public void hamrestTest(){
+        Integer a = new Integer(1);
+        Integer b = new Integer(1);
+        //使用hamrest进行断言
+        assertThat("判断a和b是否相等", a, equalTo(b));
     }
 }
