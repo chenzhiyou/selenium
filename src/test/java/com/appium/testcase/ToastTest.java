@@ -8,6 +8,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class ToastTest {
     public static DesiredCapabilities capabilities;
     public static AndroidDriver driver;
@@ -27,5 +29,18 @@ public class ToastTest {
     public void toastTest(){
         //获取toast控件的内容并打印
         System.out.println(driver.findElement(By.xpath("//*[@classs='android.widget.Toast']")).getText());
+    }
+    public void assertTest(){
+        Integer a = new Integer(1);
+        Integer b = new Integer(2);
+
+        assertEquals(a, b);
+        assertNotNull(a);
+        assertTrue(false);
+        assertFalse(true);
+        assertNull(b);
+        assertSame(a, b);
+        assertNotSame(a, b);
+
     }
 }
