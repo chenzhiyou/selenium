@@ -2,11 +2,15 @@ package com.appium.testcase;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,5 +55,18 @@ public class ToastTest {
         Integer b = new Integer(1);
         //使用hamrest进行断言
         assertThat("判断a和b是否相等", a, equalTo(b));
+    }
+    //参数化的测试用例
+    @ParameterizedTest
+    @MethodSource("byNameGetPrices")
+    public void paramsTest(String name, String code, double price){
+
+    }
+    //进行参数化
+    private static Stream<Arguments> byNameGetPrices(){
+        return Stream.of(Arguments.of("alibaba","BABA",210d),
+                Arguments.of("wangyi","NTES",210d),
+                Arguments.of("baidu","BIDU",210d)
+                );
     }
 }
