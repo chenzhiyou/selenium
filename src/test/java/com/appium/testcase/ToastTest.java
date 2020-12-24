@@ -1,6 +1,7 @@
 package com.appium.testcase;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,6 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,16 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ToastTest {
     public static DesiredCapabilities capabilities;
     public static AndroidDriver driver;
+    @BeforeAll
     public static void initData() throws MalformedURLException {
         //初始化环境变量
         capabilities = new DesiredCapabilities();
-        capabilities.setCapability("deviceName", "Android Emulator");
+        capabilities.setCapability("deviceName", "小江山");
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "5.1.1");
-        capabilities.setCapability("appPackage", "com.android.settings");
-        capabilities.setCapability("appActivity", ".Settings");
+        capabilities.setCapability("appPackage", "com.xueqiu.android");
+        capabilities.setCapability("appActivity", ".view.WelcomeActivityAlias");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
