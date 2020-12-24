@@ -27,6 +27,9 @@ public class webviewTeset {
         capabilities.setCapability("appPackage", "com.xueqiu.android");
         capabilities.setCapability("appActivity", ".view.WelcomeActivityAlias");
         capabilities.setCapability("noReset", "true");
+        capabilities.setCapability("chromedriverExecutableDir", "");
+        capabilities.setCapability("chromedriverChromeMappingFile", "");
+        capabilities.setCapability("showChromedriverLog", "");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
