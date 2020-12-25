@@ -41,9 +41,12 @@ public class wxmicroTest {
         Dimension size = driver.manage().window().getSize();
         // 向下滑动出小程序
         Thread.sleep(10000);
-        new TouchAction<>(driver).longPress(LongPressOptions.longPressOptions()
-                .withDuration(Duration.ofSeconds(2))
-                .withPosition(PointOption.point(size.width/2, size.height/2)))
-                .moveTo(PointOption.point(size.width/2,(size.height/2))).release().perform();
+        new TouchAction<>(driver)
+                .longPress(
+                        LongPressOptions.longPressOptions()
+                            .withDuration(Duration.ofSeconds(2))
+                            .withPosition(PointOption.point(size.width/2, size.height/4)))
+                .moveTo(PointOption.point(size.width/2, size.height/10*8))
+                .release().perform();
     }
 }
