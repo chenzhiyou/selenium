@@ -47,7 +47,7 @@ public class webviewTeset {
             //打印上下文信息
             driver.getContextHandles().forEach(context -> System.out.println(context.toString()));
         }
-        //切换到webview
+        //切换到webview，在进行webview切换的时候，需要注意Chromedriver版本的对应，否则无法切换
         driver.context(driver.getContextHandles().toArray()[1].toString());
         //打印webview的信息
         driver.getWindowHandles().forEach(window -> {
@@ -55,5 +55,9 @@ public class webviewTeset {
             driver.switchTo().window(window);
             System.out.println(driver.getPageSource());
         });
+    }
+    @Test
+    public void wxmicroApplication(){
+
     }
 }
