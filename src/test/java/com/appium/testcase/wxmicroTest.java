@@ -25,6 +25,11 @@ public class wxmicroTest {
     public static void initData() throws MalformedURLException {
         //初始化环境变量
         capabilities = new DesiredCapabilities();
+        ChromeOptions chromeOptions = new ChromeOptions();
+//        chromeOptions.setExperimentalOption("androidPackage", "com.tenchent.mm");
+        chromeOptions.setExperimentalOption("androidProcess", "com.tenchent.mm:appbrand0");
+        capabilities.setCapability("goog:chromeOptions",chromeOptions);
+        capabilities.setCapability("browserName","");
         capabilities.setCapability("deviceName", "小江山");
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("platformName", "Android");
@@ -40,9 +45,7 @@ public class wxmicroTest {
 //        capabilities.setCapability("chromedriverChromeMappingFile", "");
 //        capabilities.setCapability("showChromedriverLog", "");
         // 小程序自动化
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setCapability("androidProcess", "com.tenchent.mm:appbrand0");
-        capabilities.setCapability("chromeOptions", "chromeOptions");
+
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
