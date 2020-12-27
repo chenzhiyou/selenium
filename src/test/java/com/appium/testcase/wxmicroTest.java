@@ -6,7 +6,10 @@ import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -30,9 +33,15 @@ public class wxmicroTest {
         capabilities.setCapability("appActivity", "com.tencent.mm.ui.LauncherUI");
         // .ui.LauncherUI
         capabilities.setCapability("noReset", "true");
+        //对输入法的控制
+        capabilities.setCapability("unicodeKeyboadr","true");
+        capabilities.setCapability("resetKeyboard", "true");
 //        capabilities.setCapability("chromedriverExecutableDir", "");
 //        capabilities.setCapability("chromedriverChromeMappingFile", "");
 //        capabilities.setCapability("showChromedriverLog", "");
+        // 小程序自动化
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setCapability("androidProcess", "com.tenchent.mm:appbrand0");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
@@ -48,5 +57,16 @@ public class wxmicroTest {
                             .withPosition(PointOption.point(size.width/2, size.height/4)))
                 .moveTo(PointOption.point(size.width/2, size.height/10*8))
                 .release().perform();
+        driver.findElement(By.xpath("//*[@text=搜索小程序]")).click();
+        driver.findElement(By.xpath("//*[@text=搜索小程序]")).sendKeys("雪球"+ Keys.ENTER);
+        driver.findElement(By.className("android.widget.button")).click();
+        driver.getContextHandles().stream().forEach(context ->{
+            System.out.println(context.toString());
+        });
+        String webxview = driver.getContextHandles().stream().filter(context->context.toString()
+                .contains("WEBVIEW_")).findFirst().get().toString();
+        System.out.println(webxview);
+        driver.context(webxview);
+
     }
 }
