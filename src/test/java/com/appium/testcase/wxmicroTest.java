@@ -42,6 +42,7 @@ public class wxmicroTest {
         // 小程序自动化
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setCapability("androidProcess", "com.tenchent.mm:appbrand0");
+        capabilities.setCapability("chromeOptions", "chromeOptions");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
