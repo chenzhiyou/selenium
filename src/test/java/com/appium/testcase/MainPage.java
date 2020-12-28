@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,6 +36,9 @@ public class MainPage extends BasePage{
         capabilities.setCapability("resetKeyboard", "true");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //追加显示等待
+        new WebDriverWait(driver, 120).
+                until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='通讯录']")));
     }
 //    public static void initData() throws MalformedURLException {
 //        capabilities = new DesiredCapabilities();
