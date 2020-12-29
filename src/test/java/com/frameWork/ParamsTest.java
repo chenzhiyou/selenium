@@ -27,14 +27,18 @@ public class ParamsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"searche1", "shearch2"})
+//    @ValueSource(strings = {"searche1", "shearch2"})
+    @MethodSource()
+    //在MethodSource后面不添加方法时，直接寻找同名的
     public void search(String keyword){
         ChromeDriver driver= new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://www.baidu.com");
         driver.findElement(By.name("wd")).sendKeys(keyword);
+    }
 
-
+    public static Stream<String> search(){
+        return Stream.of("apple", "banana");
     }
 
 }
