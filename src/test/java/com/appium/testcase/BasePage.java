@@ -6,11 +6,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class BasePage {
     protected AndroidDriver driver;
-    protected DesiredCapabilities capabilities;
 
     public  BasePage(AndroidDriver driver, DesiredCapabilities capabilities){
         this.driver = driver;
-        this.capabilities = capabilities;
     }
 
     public BasePage() {
