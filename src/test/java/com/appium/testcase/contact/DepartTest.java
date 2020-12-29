@@ -15,6 +15,7 @@ public class DepartTest {
     @BeforeAll
     public static void beforeAll() throws MalformedURLException {
         //todo:clear all test data 可以结合接口、数据库恢复 环境恢复、UI自动化测试
+        //todo: 启动APP，首次启动需要noReset=false，第一次之后再启动APP使用noRest= true
         main = new MainPage();
     }
 
