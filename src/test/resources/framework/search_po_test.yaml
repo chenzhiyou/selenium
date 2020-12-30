@@ -1,0 +1,8 @@
+data:
+  - banana
+  - apple
+steps:
+  - init: [mainPage, com.frameWork.MainPage]
+  - MainPage.search: {}
+  - searchPage: {}
+  - searchPage.search: ${data}

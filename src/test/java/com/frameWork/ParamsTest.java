@@ -63,7 +63,7 @@ public class ParamsTest {
     public static List<TestCase> search() throws IOException{
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         TestCase testCase = mapper.readValue(
-                ParamsTest.class.getResourceAsStream("/framework/search.yaml"),TestCase.class
+                ParamsTest.class.getResourceAsStream("/framework/search.yaml"), TestCase.class
         );
         return testCase.testcaseGenerate();
     }
