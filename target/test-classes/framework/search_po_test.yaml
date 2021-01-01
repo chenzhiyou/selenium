@@ -2,7 +2,8 @@ data:
   - banana
   - apple
 steps:
-  - init: [mainPage, com.frameWork.MainPage]
+#  - init: [mainPage, com.frameWork.MainPage]
+  - init: [mainPage, main_po.yaml]
   - MainPage.search: {}
   - searchPage: {}
   - searchPage.search: ${data}

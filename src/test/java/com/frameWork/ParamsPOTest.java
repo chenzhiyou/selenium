@@ -24,7 +24,7 @@ public class ParamsPOTest {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         TestCase testCase = mapper.readValue(
                 ParamsTest.class.getResourceAsStream("/framework/search_po_test.yaml"),
-                TestCase.class
+                POTestCase.class
         );
         return testCase.testcaseGenerate();
     }
