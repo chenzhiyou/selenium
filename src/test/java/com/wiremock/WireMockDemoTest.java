@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
@@ -56,6 +59,23 @@ public class WireMockDemoTest {
                             .withBody("<response>测试人</response>")));
             Thread.sleep(500000);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 借助proxy读取本地文件进行mock数据，功能类似于Charles中的maplocal功能
+    @Test
+    public void proxyMockTest(){
+        try {
+            //监听的网站的配置
+            stubFor(get(urlMatching(".*")).atPriority(10)
+                    .willReturn(aResponse().proxiedFrom("https://ceshiren.com")));
+
+            //将监听到的内容，替换为本地的文件数据
+            stubFor(get(urlEqualTo("/categories_and_latest")).atPriority(1)
+                    .willReturn(aResponse().withBody(Files.readAllBytes(Paths.get(WireMockDemoTest.class.getResource("/framework/mock.json").getPath())))));
+            Thread.sleep(500000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
