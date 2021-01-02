@@ -20,4 +20,20 @@ public class DemoTest2 {
                 .body("store.book.findAll { book -> book.price == 8.95f}.price",equalTo(8.95))
                 ;
     }
+
+    @Test
+    public void testXML(){
+        given()
+                .get("http://127.0.0.1:8000/testRestDemo.xml")
+                .then()
+                .body("shopping.category[0].item[0].name",equalTo("Chocolate"))
+                //断言item的数量
+                .body("shopping.category.item.size()",equalTo(5))
+                //支持复杂表达式
+                .body("shopping.category.findAll { it.@type == 'groceries' }.size()",equalTo(1))
+                .body("shopping.category.item.findAll {it.price == 20}.name",equalTo("Coffee"))
+                //支持**表达式
+                .body("**.findAll {it.price == 20}.name",equalTo("Coffee"))
+                ;
+    }
 }
