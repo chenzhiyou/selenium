@@ -21,11 +21,12 @@ public class Demo_03_repate {
     private static final Logger logger = LoggerFactory.getLogger(Demo_01_base.class);
     static String accessToken;
     static int departmentID;
-    static ArrayList<Integer> departmentIDList;
+
     @BeforeAll
     public static void getAccessToken(){
         accessToken = TokenHelper.getToken();
         //在初始化的时候，进行数据清理操作
+        DepartMentObject.deleteDepartMethod(accessToken,1);
     }
 
     @Order(1)
