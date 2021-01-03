@@ -1,21 +1,16 @@
 package com.wechatinterface.department;
 
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.hamcrest.Matchers.*;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * 1、基础脚本，分别执行了创建、更新、查询、删除
- * 2、使用时间戳生成器，生成名字，确保数据的不重复性
- */
-
-//在规定按照order执行顺序时，需要给类加上注解
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class Demo_01_base {
+public class Demo_02_separate {
     private static final Logger logger = LoggerFactory.getLogger(Demo_01_base.class);
     static String accessToken;
     static String departmentID;
@@ -32,31 +27,30 @@ public class Demo_01_base {
     @DisplayName("创建部门")
     @Test
     public void createDepart(){
-        String name = "name"+ FakerUtils.getTimeStamp();
-        String body="{\n" +
-                "   \"name\": \""+name+"\",\n" +
+        String createBody="{\n" +
+                "   \"name\": \"广州研发中心10\",\n" +
                 "   \"parentid\": 1,\n" +
                 "}\n";
-        Response response = given()
+        Response createResponse = given()
                 .contentType("application/json")
                 .queryParams("access_token",accessToken)
-                .body(body)
+                .body(createBody)
                 .post("https://qyapi.weixin.qq.com/cgi-bin/department/create")
                 .then()
                 .log().all().extract().response();
-        departmentID = response.path("id").toString();
+        departmentID = createResponse.path("id").toString();
     }
 
     @Order(2)
     @DisplayName("更新部门")
     @Test
     public void updatedepart(){
-        String body ="{\n" +
+        String updateBody ="{\n" +
                 "   \"id\":"+ departmentID+",\n" +
                 "}\n";
-        Response response = given()
+        Response updateResponse = given()
                 .queryParams("access_token",accessToken)
-                .body(body)
+                .body(updateBody)
                 .post("https://qyapi.weixin.qq.com/cgi-bin/department/update")
                 .then()
                 .log().all()
@@ -67,7 +61,7 @@ public class Demo_01_base {
     @DisplayName("查询部门列表")
     @Test
     public void getDepartList(){
-        Response response = given()
+        Response getResponse = given()
                 .param("access_token",accessToken)
                 .param("id",departmentID)
                 .get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
@@ -80,7 +74,7 @@ public class Demo_01_base {
     @Test
     public void deleteDepart(){
 
-        Response response = given()
+        Response deleteResponse = given()
                 .contentType("application/json")
                 .param("access_token",accessToken)
                 .param("id",departmentID)
