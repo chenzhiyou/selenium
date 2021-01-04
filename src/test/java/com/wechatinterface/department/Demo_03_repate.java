@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -55,6 +56,9 @@ public class Demo_03_repate {
     @Test
     public void getDepartList(){
         Response getResponse= DepartMentObject.getDepart(accessToken, departmentID);
+        //增加软断言
+        assertAll("查询返回值校验",
+                ()->assertEquals(0, getResponse.path("errcode").toString()));
     }
 
 
