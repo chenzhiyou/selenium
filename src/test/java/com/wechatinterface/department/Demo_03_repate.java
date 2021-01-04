@@ -4,12 +4,15 @@ import com.wechatinterface.department.apiobject.DepartMentObject;
 import com.wechatinterface.department.apiobject.TokenHelper;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 1、基础脚本，分别执行了创建、更新、查询、删除
@@ -31,11 +34,13 @@ public class Demo_03_repate {
 
     @Order(1)
     @DisplayName("创建部门")
-    @Test
-    public void createDepart(){
-        String name = "name" + FakerUtils.getTimeStamp();
-        Response createResponse = DepartMentObject.createDepart(accessToken, name);
+//    @Test
+    @ParameterizedTest
+    @CsvFileSource(resources = "/data/createDepartment.csv",numLinesToSkip = 1)
+    public void createDepart(String creatName, String returnCode){
+        Response createResponse = DepartMentObject.createDepart(accessToken, creatName);
         departmentID = createResponse.path("id");
+        assertEquals(returnCode, createResponse.path("errcode").toString());
     }
 
     @Order(2)
