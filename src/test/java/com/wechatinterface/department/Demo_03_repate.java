@@ -2,6 +2,7 @@ package com.wechatinterface.department;
 
 import com.wechatinterface.department.apiobject.DepartMentObject;
 import com.wechatinterface.department.apiobject.TokenHelper;
+import com.wechatinterface.department.task.EvnHelperTask;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +31,7 @@ public class Demo_03_repate {
     public static void getAccessToken(){
         accessToken = TokenHelper.getToken();
         //在初始化的时候，进行数据清理操作
-        DepartMentObject.deleteDepartMethod(accessToken,1);
+        EvnHelperTask.deleteDepartMethod(accessToken,1);
     }
 
     @Order(1)

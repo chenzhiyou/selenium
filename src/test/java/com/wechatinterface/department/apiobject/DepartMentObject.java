@@ -59,16 +59,4 @@ public class DepartMentObject {
         return deleteResponse;
     }
 
-    public static void deleteDepartMethod( String accessToken, int departmentID){
-        ArrayList<Integer> departmentIDList = getDepart(accessToken,departmentID).path("department.id");
-        System.out.println(departmentIDList);
-        for(int deparmentID:departmentIDList){
-            if(deparmentID==1){
-                continue;
-            }else{
-                deleteDepart(accessToken,deparmentID);
-            }
-        }
-
-    }
 }
