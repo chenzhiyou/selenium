@@ -3,9 +3,12 @@ package com.apiobject.framework.actions;
 import com.apiobject.framework.global.GlobalVariables;
 import com.apiobject.utils.PlaceholderUtils;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static io.restassured.RestAssured.given;
 
 public class ApiActionsModel {
     //私有的变量，如果外部需要访问，需要设置getter和setter方法
@@ -14,11 +17,11 @@ public class ApiActionsModel {
     private String body;
     private String contentType;
     private HashMap<String, String> query;
-    private HashMap<String,String> headers;
+    private HashMap<String, String> headers;
     private String post;
     private String get;
     private Response response;
-    private ArrayList<String> formalPara;
+    private ArrayList<String> formalParam;
     private HashMap<String, String> actionVariables = new HashMap<>();
 
     public String getMethod() {
@@ -93,52 +96,76 @@ public class ApiActionsModel {
         this.response = response;
     }
 
-    public ArrayList<String> getFormalPara() {
-        return formalPara;
+    public ArrayList<String> getFormalParam() {
+        return formalParam;
     }
 
-    public void setFormalPara(ArrayList<String> formalPara) {
-        this.formalPara = formalPara;
+    public void setFormalParam(ArrayList<String> formalParam) {
+        this.formalParam = formalParam;
     }
 
-    public Response run(ArrayList<String> actualParameter){
+    public Response run(ArrayList<String> actualParameter) {
         HashMap<String, String> finalQuery = new HashMap<>();
         String runBody = this.body;
         String runUrl = this.url;
         /**
-         * 1、确定请求方法和URL
+         * 1.确定请求方法和URL
          */
-        if(post !=null){
+        if (post != null) {
             runUrl = post;
             method = "post";
-        }else if (get !=null){
+        } else if (get != null) {
             runUrl = get;
             method = "get";
         }
         /**
-         * 2、请求参数、URL全局变量替换
-         * PS：这里需要编写占位符工具类PlaceholderUtils
+         * 2、请求参数、URL中全局变量替换
+         * PS:这里需要编写占位符工具类PlaceholderUtils
          */
-        if(query !=null){
+        if (query != null) {
             finalQuery.putAll(PlaceholderUtils.resolveMap(query, GlobalVariables.getGlobalVariables()));
         }
-        /**
-         * body内部变量替换
-         */
-        runBody = PlaceholderUtils.resolveString(body, GlobalVariables.getGlobalVariables());
-        //URL全局变量替换
-        runUrl = PlaceholderUtils.resolveString(runUrl,GlobalVariables.getGlobalVariables());
-        /**
-         * 根据形参和实参构建内变量MAP
-         */
-        for(int index=0; index<formalPara.size(); index++){
-            actionVariables.put(formalPara.get(index),actualParameter.get(index));
+        //body全局变量替换
+        runBody = PlaceholderUtils.resolveString(runBody, GlobalVariables.getGlobalVariables());
+        //url全局变量替换
+        runUrl = PlaceholderUtils.resolveString(runUrl, GlobalVariables.getGlobalVariables());
+        if (formalParam != null && actualParameter != null && formalParam.size() > 0 && actualParameter.size() > 0) {
+
+            /**
+             * 3、根据形参和实参构建内部变量MAP
+             */
+            for (int index = 0; index < formalParam.size(); index++) {
+                actionVariables.put(formalParam.get(index), actualParameter.get(index));
+            }
+            /**
+             * 4、请求、URL中的内部变量进行一个替换
+             */
+            if (query != null) {
+                finalQuery.putAll(PlaceholderUtils.resolveMap(query, actionVariables));
+            }
+            runBody = PlaceholderUtils.resolveString(body, actionVariables);
+            runUrl = PlaceholderUtils.resolveString(runUrl, actionVariables);
         }
+        /**
+         * 5、拿到了上面完成了变量替换的请求数据，我们接下来要进行请求并返回结果
+         */
+        RequestSpecification requestSpecification = given().log().all();
+        if (contentType != null) {
+            requestSpecification.contentType(contentType);
+        }
+        if (headers != null) {
+            requestSpecification.headers(headers);
+        }
+        if (finalQuery != null && finalQuery.size() > 0) {
+            requestSpecification.formParams(finalQuery);
+        } else if (runBody != null) {
+            requestSpecification.body(runBody);
+        }
+
+        Response response = requestSpecification.request(method, runUrl).then().log().all().extract().response();
+
+        this.response = response;
+        return response;
+
     }
-
-
-
-
-
-
 }
