@@ -102,7 +102,7 @@ public class StepModel {
          */
         if(save !=null){
             save.forEach((variablesName, path)->{
-                String value = response.path(path.toString());
+                String value = response.path(path).toString();
                 stepVariables.put(variablesName, value);
                 logger.info("局部变量更新"+stepVariables);
             });

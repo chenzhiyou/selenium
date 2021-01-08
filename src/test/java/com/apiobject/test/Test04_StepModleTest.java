@@ -53,7 +53,7 @@ public class Test04_StepModleTest {
         stepModel.setSave(save);
         stepModel.setSaveGlobal(globalsave);
         stepModel.run(null);
-    logger.info("Debugger");
+        logger.info("Debugger");
     }
 
 }
