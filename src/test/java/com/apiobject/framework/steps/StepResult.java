@@ -1,11 +1,12 @@
 package com.apiobject.framework.steps;
 
+import com.apiobject.framework.BaseResult;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StepResult {
+public class StepResult extends BaseResult {
     private ArrayList<Executable> assertList = new ArrayList<>();
     private HashMap<String, String> stepVariables = new HashMap<>();
 

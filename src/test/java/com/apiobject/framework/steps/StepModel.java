@@ -132,7 +132,8 @@ public class StepModel {
          */
         stepResult.setAssertList(assertList);
         stepResult.setStepVariables(stepVariables);
-        return null;
+        stepResult.setResponse(response);
+        return stepResult;
     }
 
 
