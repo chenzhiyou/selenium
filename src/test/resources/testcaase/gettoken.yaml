@@ -14,5 +14,5 @@ steps:
         reason: 'getToken错误码校验01！'
       - actual: errcode
         matcher: equalTo
-        expect: 2
+        expect: 0
         reason: 'getToken错误码校验01！'
