@@ -162,7 +162,7 @@ public class ApiActionsModel {
             requestSpecification.body(runBody);
         }
 
-        Response response = requestSpecification.request(method, runUrl).then().log().all().extract().response();
+        Response response = requestSpecification.request(method,runUrl).then().log().all().extract().response();
 
         this.response = response;
         return response;

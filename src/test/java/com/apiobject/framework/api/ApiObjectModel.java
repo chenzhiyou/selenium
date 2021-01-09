@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 public class ApiObjectModel {
     private String name;
-    private HashMap<String, ApiActionsModel> actions;
-    private HashMap<String, String> abVatiables = new HashMap<>();
+    private HashMap<String , ApiActionsModel> actions;
+    private HashMap<String ,String> obVariables = new HashMap<>();
 
     public String getName() {
         return name;
@@ -29,17 +29,16 @@ public class ApiObjectModel {
         this.actions = actions;
     }
 
-    public HashMap<String, String> getAbVatiables() {
-        return abVatiables;
+    public HashMap<String, String> getObVariables() {
+        return obVariables;
     }
 
-    public void setAbVatiables(HashMap<String, String> abVatiables) {
-        this.abVatiables = abVatiables;
+    public void setObVariables(HashMap<String, String> obVariables) {
+        this.obVariables = obVariables;
     }
 
     public static ApiObjectModel load(String path) throws IOException {
-        //反序列化
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-        return objectMapper.readValue(new File(path), ApiObjectModel.class);
+        return objectMapper.readValue(new File(path),ApiObjectModel.class);
     }
 }

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class Test05_AApiTestCaseTest {
+public class Test05_ApiTestCaseTest {
     private static final Logger logger = LoggerFactory.getLogger(Demo_01_base.class);
 
     @BeforeAll
